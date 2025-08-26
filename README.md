@@ -1,100 +1,75 @@
-Kuber AI Gold Investment Assistant
-Kuber AI's workflow for identifying investment interest and facilitating digital gold purchases. Built with FastAPI, OpenAI GPT-4o, and deployed on Render.
+An AI-powered gold investment assistant that replicates Kuber AI's workflow for identifying investment interest and facilitating digital gold purchases. Built with FastAPI, OpenAI GPT-4o, and deployed on Render.
 
-🚀 Live Demo
-🌐 API Documentation: https://kuber-ai-assignment.onrender.com/docs
+## 🚀 Live Demo
 
-💬 Chat API: POST /api/v1/chat
+- **🌐 API Documentation**: [https://kuber-ai-assignment.onrender.com/docs](https://kuber-ai-assignment.onrender.com/docs)
+- **💬 Chat API**: `POST /api/v1/chat`
+- **💰 Purchase API**: `POST /api/v2/purchase`
 
-💰 Purchase API: POST /api/v2/purchase
+  
+## ✨ Features
 
-🏗️ Architecture
-text
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   User Query    │───▶│   Chat API      │───▶│   OpenAI GPT-4o │
-│                 │    │   (Intent       │    │   (Gold Advice) │
-│                 │    │   Detection)    │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │ Session Storage │
-                       │ & Nudge Logic   │
-                       └─────────────────┘
-                                │
-                                ▼ (Purchase Intent)
-                       ┌─────────────────┐    ┌─────────────────┐
-                       │  Purchase API   │───▶│   SQLite DB     │
-                       │  (Gold Buying)  │    │   (Persistence) │
-                       └─────────────────┘    └─────────────────┘
+### 🤖 API 1: Conversational Gold Investment Assistant
 
+- **Intent Detection**: Identifies gold investment queries using LLM + keyword analysis
+- **Personalized Advice**: Indian market-specific guidance (₹ currency, MMTC-PAMP vaults)
+- **Session Management**: UUID-based session tracking with conversation context
+- **Intelligent Nudging**: Triggers purchase suggestions after 2+ gold-related queries
+- **Fallback Responses**: Comprehensive backup responses for API failures
 
+### 💳 API 2: Digital Gold Purchase System
 
-✨ Features
-🤖 API 1: Conversational Gold Investment Assistant
-Intent Detection: Identifies gold investment queries using LLM + keyword analysis
+- **Complete Purchase Flow**: User creation, gold calculation, transaction processing
+- **Live Gold Pricing**: Calculations based on ₹6,500/gram (configurable)
+- **Database Integration**: SQLite with proper user-transaction relationships
+- **Transaction Tracking**: Unique transaction IDs and audit trails
+- **Data Validation**: Email validation, proper error handling
 
-Personalized Advice: Indian market-specific guidance (₹ currency, MMTC-PAMP vaults)
+## 🛠️ Tech Stack
 
-Session Management: UUID-based session tracking with conversation context
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Backend** | FastAPI 0.104.1 | REST API framework with auto-documentation |
+| **AI Model** | OpenAI GPT-4o | Conversational intelligence and advice generation |
+| **Database** | SQLite + SQLAlchemy | Data persistence with ORM |
+| **Deployment** | Render.com | Cloud hosting with automatic HTTPS |
+| **Session Management** | In-memory storage | UUID-based conversation tracking |
+| **Validation** | Pydantic | Request/response validation and type safety |
 
-Intelligent Nudging: Triggers purchase suggestions after 2+ gold-related queries
+## 🚀 Quick Start
 
-Fallback Responses: Comprehensive backup responses for API failures
+### Prerequisites
 
-💳 API 2: Digital Gold Purchase System
-Complete Purchase Flow: User creation, gold calculation, transaction processing
+- Python 3.11+
+- OpenAI API Key
+- Git
 
-Live Gold Pricing: Calculations based on ₹6,500/gram (configurable)
+### Local Development
 
-Database Integration: SQLite with proper user-transaction relationships
-
-Transaction Tracking: Unique transaction IDs and audit trails
-
-Data Validation: Email validation, proper error handling
-
-🛠️ Tech Stack
-Component	Technology	Purpose
-Backend	FastAPI 0.104.1	REST API framework with auto-documentation
-AI Model	OpenAI GPT-4o	Conversational intelligence and advice generation
-Database	SQLite + SQLAlchemy	Data persistence with ORM
-Deployment	Render.com	Cloud hosting with automatic HTTPS
-Session Management	In-memory storage	UUID-based conversation tracking
-Validation	Pydantic	Request/response validation and type safety
-🚀 Quick Start
-Prerequisites
-Python 3.11+
-
-OpenAI API Key
-
-Git
-
-Local Development
-bash
-# Clone repository
-git clone https://github.com/yourusername/kuber-ai-assignment.git
+Clone repository
+git clone https://github.com/laasya2505/kuber-ai-assignment.git
 cd kuber-ai-assignment
 
-# Create virtual environment
+Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate # On Windows: venv\Scripts\activate
 
-# Install dependencies
+Install dependencies
 pip install -r requirements.txt
 
-# Set environment variables
+Set environment variables
 echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
 echo "GOLD_PRICE_PER_GRAM=6500" >> .env
 
-# Run application
+Run application
 python run.py
-Access locally: http://localhost:8000/docs
 
 Environment Variables
-text
+
 OPENAI_API_KEY=your_openai_api_key_here
 GOLD_PRICE_PER_GRAM=6500
 PYTHON_VERSION=3.11.0
+
 📝 API Usage
 Chat with Gold Investment Assistant
 bash
@@ -142,30 +117,7 @@ curl "https://kuber-ai-assignment.onrender.com/api/v1/transactions/TXNABC123DEF"
 
 # Get user transaction history  
 curl "https://kuber-ai-assignment.onrender.com/api/v1/users/1/transactions"
-🗄️ Database Schema
-Users Table
-sql
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    phone VARCHAR(15) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-Transactions Table
-sql
-CREATE TABLE transactions (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
-    amount FLOAT NOT NULL,
-    gold_grams FLOAT NOT NULL,
-    gold_price_per_gram FLOAT NOT NULL,
-    transaction_id VARCHAR(50) UNIQUE NOT NULL,
-    status VARCHAR(20) DEFAULT 'completed',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+
 🧪 Testing
 Test Scenarios
 Gold Investment Inquiry: Ask about gold investment benefits
@@ -210,7 +162,7 @@ Set Environment Variables: OpenAI API key and gold price
 Deploy: Automatic deployment with HTTPS
 
 File Structure
-text
+
 kuber-ai-assignment/
 ├── app/
 │   ├── __init__.py
@@ -223,99 +175,86 @@ kuber-ai-assignment/
 ├── run.py                  # Application entry point
 ├── .env                    # Environment variables (local)
 └── README.md               # This file
-🔧 Configuration
-Gold Pricing
-Current Rate: ₹6,500 per gram (configurable via environment variable)
 
-Calculation: gold_grams = amount / GOLD_PRICE_PER_GRAM
 
-Precision: Rounded to 4 decimal places
+## 🔧 Configuration
 
-Session Management
-Storage: In-memory dictionary (upgradeable to Redis)
+### Gold Pricing
 
-Session ID: UUID4 generation for unique identification
+- **Current Rate**: ₹6,500 per gram (configurable via environment variable)
+- **Calculation**: `gold_grams = amount / GOLD_PRICE_PER_GRAM`
+- **Precision**: Rounded to 4 decimal places
 
-Scoring: Tracks gold investment interest (triggers nudging at score ≥ 2)
+### Session Management
 
-Persistence: Conversation context maintained across API calls
+- **Storage**: In-memory dictionary (upgradeable to Redis)
+- **Session ID**: UUID4 generation for unique identification
+- **Scoring**: Tracks gold investment interest (triggers nudging at score ≥ 2)
+- **Persistence**: Conversation context maintained across API calls
 
-🎯 Business Logic
-Intent Detection Flow
-Keyword Analysis: Checks for gold-related terms
+## 🎯 Business Logic
 
-LLM Processing: GPT-4o analyzes conversation context
+### Intent Detection Flow
 
-Response Generation: Personalized advice with Indian market focus
+1. **Keyword Analysis**: Checks for gold-related terms
+2. **LLM Processing**: GPT-4o analyzes conversation context
+3. **Response Generation**: Personalized advice with Indian market focus
+4. **Engagement Scoring**: Tracks user interest level
+5. **Purchase Nudging**: Suggests buying after demonstrated interest
 
-Engagement Scoring: Tracks user interest level
+### Purchase Workflow
 
-Purchase Nudging: Suggests buying after demonstrated interest
+1. **User Validation**: Email, phone, name validation
+2. **User Management**: Create new or retrieve existing user
+3. **Gold Calculation**: Amount to grams conversion
+4. **Transaction Creation**: Generate unique ID and store in database
+5. **Confirmation**: Return success with transaction details
 
-Purchase Workflow
-User Validation: Email, phone, name validation
+## 🚧 Known Limitations
 
-User Management: Create new or retrieve existing user
+- **Session Storage**: In-memory (not suitable for horizontal scaling)
+- **Gold Pricing**: Hardcoded (no live market data integration)
+- **Authentication**: No user authentication system
+- **Payment Gateway**: Mock purchase flow (no real payment processing)
 
-Gold Calculation: Amount to grams conversion
+## 🔮 Future Enhancements
 
-Transaction Creation: Generate unique ID and store in database
+- **Redis Integration**: Scalable session management
+- **Live Gold Prices**: Real-time market data integration
+- **Payment Gateway**: Razorpay/Stripe integration for real purchases
+- **User Authentication**: JWT-based security system
+- **Microservices**: Split into chat and purchase services
+- **Database Migration**: PostgreSQL for production scalability
 
-Confirmation: Return success with transaction details
+## 📊 Performance Metrics
 
-🚧 Known Limitations
-Session Storage: In-memory (not suitable for horizontal scaling)
+- **Response Time**: < 2 seconds for chat responses
+- **Database Queries**: Optimized with proper indexing
+- **Session Management**: UUID-based tracking with O(1) lookup
+- **Gold Calculations**: Precise to 4 decimal places
+- **Uptime**: 99.9% on Render.com free tier
 
-Gold Pricing: Hardcoded (no live market data integration)
+## 🤝 Contributing
 
-Authentication: No user authentication system
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
-Payment Gateway: Mock purchase flow (no real payment processing)
+## 📄 License
 
-🔮 Future Enhancements
-Redis Integration: Scalable session management
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Live Gold Prices: Real-time market data integration
+## 🙏 Acknowledgments
 
-Payment Gateway: Razorpay/Stripe integration for real purchases
+- **OpenAI** for GPT-4o API
+- **FastAPI** for excellent framework and auto-documentation
+- **Render.com** for seamless deployment platform
+- **Kuber AI** for inspiration and workflow reference
 
-User Authentication: JWT-based security system
+---
 
-Microservices: Split into chat and purchase services
 
-Database Migration: PostgreSQL for production scalability
 
-📊 Performance Metrics
-Response Time: < 2 seconds for chat responses
-
-Database Queries: Optimized with proper indexing
-
-Session Management: UUID-based tracking with O(1) lookup
-
-Gold Calculations: Precise to 4 decimal places
-
-Uptime: 99.9% on Render.com free tier
-
-🤝 Contributing
-Fork the repository
-
-Create feature branch (git checkout -b feature/amazing-feature)
-
-Commit changes (git commit -m 'Add amazing feature')
-
-Push to branch (git push origin feature/amazing-feature)
-
-Open Pull Request
-
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-🙏 Acknowledgments
-OpenAI for GPT-4o API
-
-FastAPI for excellent framework and auto-documentation
-
-Render.com for seamless deployment platform
-
-Kuber AI for inspiration and workflow reference
-
+**🔗 Live Demo**: [https://kuber-ai-assignment.onrender.com/docs](https://kuber-ai-assignment.onrender.com/docs)
