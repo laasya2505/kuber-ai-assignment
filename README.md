@@ -27,6 +27,9 @@ text
                        │  Purchase API   │───▶│   SQLite DB     │
                        │  (Gold Buying)  │    │   (Persistence) │
                        └─────────────────┘    └─────────────────┘
+
+
+
 ✨ Features
 🤖 API 1: Conversational Gold Investment Assistant
 Intent Detection: Identifies gold investment queries using LLM + keyword analysis
@@ -315,3 +318,4 @@ FastAPI for excellent framework and auto-documentation
 Render.com for seamless deployment platform
 
 Kuber AI for inspiration and workflow reference
+
